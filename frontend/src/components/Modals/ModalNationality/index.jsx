@@ -7,30 +7,27 @@ import {Modal, Spinner} from "react-bootstrap";
 import Button from "../../Layout/Button";
 
 
-const ModalUser = ({
-  idUser, onUpdate, onCreate, children
+const ModalNationality = ({
+  idNationality, onUpdate, onCreate, children
 }) => {
   const [isLoading, setLoading] = React.useState(true);
   const [isSaving, setSaving] = React.useState(true);
   const [isShow, setShowModal] = React.useState(false);
 
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = React.useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = React.useState('');
+
 
   const submitData = () => {
     setSaving(true);
-    if (idUser) {
-      BaseApi.put(`/users/${idUser}`, {
-        name: name,
-        email: email
+    if (idNationality) {
+      BaseApi.put(`/nacionalidade/${idNationality}`, {
+        nome: name,
+       
       }).then(res => {
-      
-
+        
         setSaving(false);
         setShowModal(false);
-        toast.success('User updated successfully!');
+        toast.success('Nationality updated successfully!');
         onUpdate && onUpdate(res.data);
       }).catch(err => {
         console.log(err);
@@ -39,15 +36,13 @@ const ModalUser = ({
       })
     }
     else {
-      BaseApi.post('/users', {
-        name: name,
-        email: email,
-        password: password,
-        password_confirmation: passwordConfirmation,
+      BaseApi.post('/nacionalidade', {
+        nome: name,
       }).then(res => {
         setSaving(false);
         setShowModal(false);
-        toast.success('User created successfully!');
+        toast.success('Nationality created successfully!');
+        
         onCreate && onCreate(res.data);
       }).catch(err => {
         console.log(err);
@@ -63,12 +58,9 @@ const ModalUser = ({
 
   const requestData = () => {
     setLoading(true);
-    BaseApi.get(`/users${idUser ? `/${idUser}` : ''}`).then(res => {
+    BaseApi.get(`/nacionalidade${idNationality ? `/${idNationality}` : ''}`).then(res => {
       let data = res.data;
-      setName(data.name);
-      setEmail(data.email);
-      setPassword(data.password);
-      setPasswordConfirmation(data.password_confirmation);
+      setName(data.nome);
       setLoading(false);
       setSaving(false);
     }).catch(err => {
@@ -83,7 +75,6 @@ const ModalUser = ({
       requestData();
     } else {
       setName('');
-      setEmail('');
       setLoading(true);
       setSaving(true);
     }
@@ -94,12 +85,12 @@ const ModalUser = ({
       {children &&
         React.cloneElement(children, { onClick: (e) => setShowModal(true) })}
       {!children && (
-        <Tooltip text={idUser ? "Edit user" : "Create user"}>
+        <Tooltip text={idNationality ? "Edit Nationality" : "Create Nationality"}>
           <button
-            className={`btn btn-${idUser ? "warning" : ""} text-white fa-bold`}
+            className={`btn btn-${idNationality ? "warning" : ""} text-white fa-bold`}
             onClick={(e) => setShowModal(true)}
           >
-            <i className={`bi bi-${idUser ? "person-gear" : "plus"}`}></i>
+            <i className={`bi bi-${idNationality ? "person-gear" : "plus"}`}></i>
           </button>
         </Tooltip>
       )}
@@ -112,7 +103,7 @@ const ModalUser = ({
         size="md"
       >
         <Modal.Header closeButton>
-          <Modal.Title>{idUser ? "Edit" : "Create"} usuário</Modal.Title>
+          <Modal.Title>{idNationality ? "Edit" : "Create"} usuário</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="d-flex align-items-center justify-content-center">
@@ -125,49 +116,16 @@ const ModalUser = ({
           {!isLoading && (
             <>
               <div className="row">
-                <h3 className="font-weight-bold">User Information</h3>
+                <h3 className="font-weight-bold">Nationality Information</h3>
                 <div className="form-group mb-3">
-                  <label htmlFor="name">User name</label>
+                  <label htmlFor="name">Nationality name</label>
                   <input
                     type="text"
                     className="form-control"
                     id="name"
-                    placeholder="Enter user name"
+                    placeholder="Enter Nationality name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="email">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="email">Confirmed Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password_confirmation"
-                    placeholder="Confirm password"
-                    value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
                   />
                 </div>
               </div>
@@ -189,7 +147,7 @@ const ModalUser = ({
                 onClick={submitData}
                 className="btn btn-success text-white"
               >
-                {idUser ? "Update" : "Create"}
+                {idNationality ? "Update" : "Create"}
               </Button>
             </div>
           </div>
@@ -199,4 +157,4 @@ const ModalUser = ({
   );
 }
 
-export default ModalUser;
+export default ModalNationality;

@@ -1,7 +1,8 @@
+import styles from './styles.module.css'
+
 import React from "react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import styles from "./styles.module.css";
 
 import BaseApi from "../../../services/Api";
 import { useStateContext } from "../../../context/ContextProvider";
@@ -9,10 +10,14 @@ import { useStateContext } from "../../../context/ContextProvider";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { findIndex } from "lodash";
-import ModalUser from "../../../components/Modals/ModalUser";
 import Pagination from "../../../components/Layout/Pagination";
 import { Spinner } from "react-bootstrap";
 import TableContainer from "../../../components/Layout/TableContainer";
+import ModalPlayer from "../../../components/Modals/ModalPlayer/index";
+
+
+
+
 
 const INITIAL_DATA = {
   total: 0,
@@ -28,140 +33,146 @@ const INITIAL_DATA = {
   data: [],
 };
 
-export default function Users() {
-  let [searchParams, setSearchParams] = useSearchParams();
 
-  let controller = new AbortController();
+export default function Players(){
+    let [searchParams, setSearchParams] = useSearchParams();
 
-  const INITIAL_FILTERS = {
-    search: searchParams.get("search") || "",
-  };
+    let controller = new AbortController();
 
-  const INITIAL_QUERY = {
-    sort: "id",
-    order: "desc",
-    per_page: 10,
-    page: searchParams.get("page") || 1,
-  };
+    const INITIAL_FILTERS = {
+        search: searchParams.get("search") || "",
+    };
 
-  const [isLoading, setLoading] = React.useState(true);
-  const [isFiltering, setFiltering] = React.useState(true);
-  const [isPaginating, setPaginating] = React.useState(true);
+    const INITIAL_QUERY = {
+        sort: "id",
+        order: "desc",
+        per_page: 10,
+        page: searchParams.get("page") || 1,
+    };
 
-  const [query, setQuery] = React.useState({
-    ...INITIAL_QUERY,
-    ...INITIAL_FILTERS,
-  });
-  const [filters, setFilters] = React.useState({ ...INITIAL_FILTERS });
-  const [tableData, setTableData] = React.useState({ ...INITIAL_DATA });
+    const [isLoading, setLoading] = React.useState(true);
+    const [isFiltering, setFiltering] = React.useState(true);
+    const [isPaginating, setPaginating] = React.useState(true);
 
-  const { setNotification } = useStateContext();
+    const [query, setQuery] = React.useState({
+        ...INITIAL_QUERY,
+        ...INITIAL_FILTERS,
+    });
+    const [filters, setFilters] = React.useState({ ...INITIAL_FILTERS });
+    const [tableData, setTableData] = React.useState({ ...INITIAL_DATA });
 
-  const requestData = (args = {}) => {
-    setLoading(true);
-    let q = { ...query, ...args };
-    BaseApi.get("/users", {
-      signal: controller.signal,
-      params: {
-        ...q,
-        search: q.search !== "" ? q.search : undefined,
-      },
-    })
-      .then((response) => {
-        setTableData(response.data);
-        setLoading(false);
-        setPaginating(false);
-        setFiltering(false);
-      })
-      .catch((err) => {
-        if (err) {
-          console.log(err);
-          toast.error("Erro ao carregar dados da tabela");
-          setTableData({ ...INITIAL_DATA });
-          setLoading(false);
-          setPaginating(false);
-          setFiltering(false);
-        }
-      });
-  };
+    const { setNotification } = useStateContext();
 
-  const setSearch = (args = {}) => {
-    let params = { ...args };
-    if (filters.search && filters.search !== "") params.q = filters.search;
-    setSearchParams(params);
-  };
+    const requestData = (args = {}) => {
+        setLoading(true);
+        let q = { ...query, ...args };
+        BaseApi.get("/jogador", {
+        signal: controller.signal,
+        params: {
+            ...q,
+            search: q.search !== "" ? q.search : undefined,
+        },
+        })
+        .then((response) => {
+            setTableData(response.data);
+            setLoading(false);
+            setPaginating(false);
+            setFiltering(false);
+        })
+        .catch((err) => {
+            if (err) {
+            console.log(err);
+            toast.error("Erro ao carregar dados da tabela");
+            setTableData({ ...INITIAL_DATA });
+            setLoading(false);
+            setPaginating(false);
+            setFiltering(false);
+            }
+        });
+    };
 
-  const handlePagination = (page) => {
-    setSearch({ p: page });
-    setPaginating(true);
-    setQuery({ ...query, page });
-  };
 
-  const handleFilters = (e) => {
-    e.preventDefault();
-    setSearch();
-    setFiltering(true);
-    setQuery({ ...query, ...filters, page: 1 });
-  };
-
-  const handleCreateUser = (user) => {
-    setLoading(true);
-    setFilters({ ...INITIAL_FILTERS });
-    setQuery({ ...INITIAL_QUERY });
-  };
-
-  const handleUpdateUser = (user) => {
-    let data = [...tableData.data];
-    let toUpdate = findIndex(data, { id: user.id });
-    if (toUpdate === -1) return;
-    data[toUpdate] = { ...data[toUpdate], ...user };
-    setTableData({ ...tableData, data: data });
-
-   
+    const setSearch = (args = {}) => {
+        let params = { ...args };
+        if (filters.search && filters.search !== "") params.q = filters.search;
+        setSearchParams(params);
+       
+        
+      };
+    
+      const handlePagination = (page) => {
+        setSearch({ p: page });
+        setPaginating(true);
+        setQuery({ ...query, page });
+      };
+    
+      const handleFilters = (e) => {
+        e.preventDefault();
+        setSearch();
+        setFiltering(true);
+        setQuery({ ...query, ...filters, page: 1 });
+      
+        
+      };
     
 
-  };
-
-  const onDelete = (user) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(({ isConfirmed }) => {
-      if (isConfirmed) {
+    const handleCreatePlayer = (player) => {
         setLoading(true);
-        BaseApi.delete(`/users/${user.id}`)
-          .then(res => {
-            toast.success('User deleted successfully!');
-            requestData();
-          })
-          .catch(err => {
-            Swal.fire('Oops!', err?.data?.errors?.[0] || err?.data?.message || 'Ocorreu um erro ao deletar este usuário.', 'error');
-            setLoading(false);
-          }).finally(() => setLoading(false));
-      }
-    });
-  };
-
-  useEffect(() => {
-    controller = new AbortController();
-    requestData();
-    return () => {
-      controller.abort();
-      setLoading(true);
+        setFilters({ ...INITIAL_FILTERS });
+        setQuery({ ...INITIAL_QUERY });
     };
-  }, [query]);
 
-  return (
-    <>
+    const handleUpdatePlayer = (player) => {
+        let data = [...tableData.data];
+        let toUpdate = findIndex(data, { id: player.id });
+        if (toUpdate === -1) return;
+        data[toUpdate] = { ...data[toUpdate], ...player };
+        setTableData({ ...tableData, data: data });
+    };
+
+    const onDelete = (player) => {
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+        }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+            setLoading(true);
+            BaseApi.delete(`/jogador/${player.id}`)
+            .then(res => {
+                toast.success('Player deleted successfully!');
+                requestData();
+            })
+            .catch(err => {
+                Swal.fire('Oops!', err?.data?.errors?.[0] || err?.data?.message || 'Ocorreu um erro ao deletar este usuário.', 'error');
+                setLoading(false);
+            }).finally(() => setLoading(false));
+        }
+        });
+    };
+
+    useEffect(() => {
+        controller = new AbortController();
+        requestData();
+       
+        return () => {
+        controller.abort();
+        setLoading(true);
+        };
+    }, [query]);
+
+ 
+
+    return(
+        <>
       <div className="d-flex flex-column">
         <div className={"d-flex flex-column flex-md-row pb-4"}>
-          <div className={`${styles.user} col-12 col-md-4 mb-2`}>
-            <h1>Users</h1>
+          <div className={`${styles.nacionalidade} col-12 col-md-4 mb-2`}>
+            <h1>Jogadores</h1>
           </div>
           <div className="col-12 col-md-6 mb-2">
             <form onSubmit={handleFilters} className="d-flex flex-row">
@@ -181,11 +192,16 @@ export default function Users() {
             </form>
           </div>
           <div className="col-12 col-md-2 d-flex justify-content-end mb-2">
-            <ModalUser onCreate={handleCreateUser}>
+            
+         
+          <ModalPlayer onCreate={handleCreatePlayer}>
               <button className="btn btn-outline-success ms-2" type="button">
                 <span>Create</span>
               </button>
-            </ModalUser>
+            </ModalPlayer>
+        
+          
+            
           </div>
         </div>
         <TableContainer>
@@ -204,7 +220,9 @@ export default function Users() {
                 </div>
               )}
               {!isFiltering && (
+               
                 <>
+                
                   <Pagination
                     onPaginate={handlePagination}
                     showOnBottom={!isPaginating && tableData.data.length > 0}
@@ -219,7 +237,10 @@ export default function Users() {
                               <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Team</th>
+                                <th>Age</th>
+                                <th>Nationality</th>
+                                <th>Image</th>
                                 <th>Create Date</th>
                                 <th>Actions</th>
                               </tr>
@@ -228,16 +249,23 @@ export default function Users() {
                               {tableData.data.map((item) => (
                                 <tr>
                                   <td>{item.id}</td>
-                                  <td>{item.name}</td>
-                                  <td>{item.email}</td>
+                                  <td>{item.nome}</td>
+                                  <td>{item.time}</td>
+                                  <td>{item.idade}</td>
+                                  <td>{item?.nacionalidades?.nome}</td>
+                                 
+                                  <td><img className={styles.playerImage} src={item.imagem} alt="" /></td>
+
                                   <td>{item.created_at}</td>
                                   <td>
                                     <div className="d-flex align-items-center">
-                                      <ModalUser
-                                        idUser={item.id}
-                                        onUpdate={handleUpdateUser}
+
+                                    <ModalPlayer
+                                        idPlayer={item.id}
+                                        onUpdate={handleUpdatePlayer}
                                       />
                                       &nbsp;
+                                     
                                       <button
                                         className="btn btn-danger"
                                         onClick={() => onDelete(item)}
@@ -271,5 +299,5 @@ export default function Users() {
         </TableContainer>
       </div>
     </>
-  );
+    )
 }
