@@ -57,12 +57,15 @@ class JogadorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJogadorRequest $request, Jogador $jogador)
+    public function update(Request $request, int $id)
     {
-        $data = $request->validated();
+        $data = $request->all();
+        $jogador = $this->jogador->findOrFail($id);
+        dd($jogador);
         if($request->hasFile('imagem')){
             Storage::disk('public')->delete($jogador->imagem);
-            $data['imagem'] = $request->file('imagem')->store('imagem', 'public');
+            $path = $request->file('imagem')->store('imagem', 'public');
+            $data['imagem'] = url('storage/' . $path);
         }
         $jogador->update($data);
         return response()->json($jogador);
@@ -71,8 +74,9 @@ class JogadorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jogador $jogador)
+    public function destroy(int $id)
     {
+        $jogador = $this->jogador->newQuery()->findOrFail($id);
         Storage::disk('public')->delete($jogador->imagem);
         $jogador->delete();
         return 'jogador deletado';

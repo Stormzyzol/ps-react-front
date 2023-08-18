@@ -22,11 +22,11 @@ class UpdateJogadorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome'=>'required',
+            'nome'=>'sometimes',
             'imagem'=>'image',
-            'time'=>'required',
-            'idade'=>'required',
-            'nacionalidade_id'=>'required'
+            'time'=>'sometimes',
+            'idade'=>'sometimes',
+            'nacionalidade_id'=>'sometimes'
         ];
     }
 }

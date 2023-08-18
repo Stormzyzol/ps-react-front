@@ -35,7 +35,7 @@ const ModalPlayer = ({
   const [team, setTeam] = useState('');
   const [age, setAge] = useState('');
   const [nationality, setNationality] = useState('');
-  const [image, setImage] = useState(null);
+  const [image,  setImage] = useState(null);
   const [natAPI, setNatAPI] = React.useState({ ...INITIAL_DATA });
   
     const getNationality = () =>{
@@ -47,19 +47,30 @@ const ModalPlayer = ({
         )
     }
 
+  const buildFormData = () =>{
+    const formData = new FormData();
+    formData.append("nome", name)
+    formData.append("time", team)
+    formData.append("idade", age)
+    formData.append("nacionalidade_id", nationality)
+    if (image){
+      formData.append("imagem", image)
+
+    }
+    return formData
+  }
+
    
 
 
-  const submitData = () => {
+  const submitData = (e) => {
+    e.preventDefault();
     setSaving(true);
+    const formData = buildFormData();
+    
     if (idPlayer) {
-      BaseApi.put(`/jogador/${idPlayer}`, {
-        nome: name,
-        time: team,
-        idade: age,
-        nacionalidade_id: nationality,
-        imagem: image,
-      }).then(res => {
+     
+      BaseApi.put(`/jogador/${idPlayer}`, formData).then(res => {
       
 
         setSaving(false);
@@ -68,19 +79,15 @@ const ModalPlayer = ({
         onUpdate && onUpdate(res.data);
       }).catch(err => {
         console.log(err);
-        Swal.fire('Oops!', err?.data?.errors?.[0] || err?.data?.message || 'Ocorreu um erro ao atualizar este usuário.', 'error');
+        Swal.fire('Oops!', err?.data?.errors?.[0] || err?.data?.message || 'Ocorreu um erro ao atualizar este jogador.', 'error');
         setSaving(false);
       })
     }
     else {
-      BaseApi.post('/jogador', {
-        nome: name,
-        time: team,
-        idade: age,
-        nacionalidade_id: nationality,
-        imagem: image,
+     
 
-      }).then(res => {
+      BaseApi.post('/jogador', formData
+      ).then(res => {
         
         setSaving(false);
         setShowModal(false);
@@ -88,7 +95,7 @@ const ModalPlayer = ({
         onCreate && onCreate(res.data);
       }).catch(err => {
         console.log(err);
-        Swal.fire('Oops!', err?.data?.errors?.[0] || err?.data?.message || 'Ocorreu um erro ao criar este usuário.', 'error');
+        Swal.fire('Oops!', err?.data?.errors?.[0] || err?.data?.message || 'Ocorreu um erro ao criar este jogador.', 'error');
         setSaving(false);
       })
     }
@@ -98,14 +105,9 @@ const ModalPlayer = ({
     setShowModal(false);
   }
 
-  const handleChangeImage = (event) => {
- 
-    setImage(event.target.files[0])
-    console.log(image)
-
-  
-    
-    
+  const handleChangeImage = (event) => { 
+    const selectImage = event.target.files[0]
+    setImage(selectImage)
     
 
   }
