@@ -38,7 +38,8 @@ class JogadorController extends Controller
       
         $data = $request->validated();
         if($request->hasFile('imagem')){
-            $data['imagem'] = $request->file('imagem')->store('imagem', 'public');
+            $path = $request->file('imagem')->store('imagem', 'public');
+            $data['imagem'] = url('storage/' . $path);
         }
         $jogador = $this->jogador->create($data);
         return response()->json($jogador);
