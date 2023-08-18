@@ -58,7 +58,7 @@ const ModalPlayer = ({
         time: team,
         idade: age,
         nacionalidade_id: nationality,
-        imagem: image[0],
+        imagem: image,
       }).then(res => {
       
 
@@ -78,7 +78,7 @@ const ModalPlayer = ({
         time: team,
         idade: age,
         nacionalidade_id: nationality,
-        
+        imagem: image,
       }).then(res => {
         
         setSaving(false);
@@ -224,19 +224,34 @@ const ModalPlayer = ({
                 </div>
 
                 <div className="form-group mb-3">
-                    <label htmlFor="image">Player's Image</label>
+                  <label htmlFor="image">Player's Image</label>
 
-                    <input type="file" accept="image/*"
-                    className="form-control"
-                   
-                    onChange={handleChangeImage} />
+                  <input type="file" accept="image/*"
+                  className="form-control"
+                  
+                  onChange={handleChangeImage} />
+                  
+                  {idPlayer ? (
+                    <div className="d-flex justify-content-center align-items-center mt-2">
+                      <img
+                        src={image instanceof File ? URL.createObjectURL(image) : image}
+                        alt="imagem"
+                        style={{ minWidth: 250, width: 350, objectFit: 'cover' }}
+                      />
+                    </div>
+                  ) : 
+                    null
+                  }
 
-                    {image&&(<img src={URL.createObjectURL(image)} alt="imagem"/>)}
-
+                  {image && !idPlayer && (
+                    <div className="d-flex justify-content-center align-items-center mt-2">
+                      {idPlayer ? <img src={image} alt="imagem" style={{minWidth: 250, width: 350, objectFit: "cover"}}/>
+                        : <img src={URL.createObjectURL(image)} alt="imagem" style={{minWidth: 250, width: 350, objectFit: "cover"}}/>
+                      }
+                      </div>
+                    )
+                  }
                 </div>
-
-                
-                
               </div>
             </>
           )}

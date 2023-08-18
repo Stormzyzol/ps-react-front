@@ -23,7 +23,7 @@ class StoreJogadorRequest extends FormRequest
     {
         return [
             'nome'=>'required',
-            'imagem'=>'image|mimes:jpeg,png,jpg|max:2048',
+            'imagem'=>'image|mimes:jpeg,png,jpg,',
             'time'=>'required',
             'idade'=>'required',
             'nacionalidade_id'=>'required'
