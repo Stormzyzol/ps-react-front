@@ -79,6 +79,7 @@ const ModalPlayer = ({
         idade: age,
         nacionalidade_id: nationality,
         imagem: image,
+
       }).then(res => {
         
         setSaving(false);
@@ -98,7 +99,13 @@ const ModalPlayer = ({
   }
 
   const handleChangeImage = (event) => {
+ 
     setImage(event.target.files[0])
+    console.log(image)
+
+  
+    
+    
     
 
   }
