@@ -16,14 +16,20 @@ export default function Navbar(props){
         <nav className={style.navbar}>
             
             <ul className={style.navbar_nav}>
-                <img className={style.logo} src={props.logo} alt="" />
-                <h2>{props.slogan}</h2>
-                <div className={style.search}>
-                        <input type="text" name='query' className={style.search_input} placeholder="Buscar"/>
+               <a href="http://localhost:3000/playerindex"> <img className={style.logo} src={props.logo} alt="" /> </a>
+                
+                <form className={style.search} onSubmit={props.submit}>
+                        <input 
+                        type="text" 
+                        name='query' 
+                        className={style.search_input} 
+                        placeholder="Buscar"
+                        value={props.searchValue}
+                        onChange={props.change}/>
                         <button className={style.search_submit} type="submit"><span class="material-symbols-outlined">
                                 search
                             </span></button>
-                    </div>
+                </form>
 
                 <div className={style.nav_links} ref={navref}>
 

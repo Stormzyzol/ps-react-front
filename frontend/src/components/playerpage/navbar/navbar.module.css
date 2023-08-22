@@ -2,6 +2,7 @@
     height:60px;
     background: linear-gradient(to left, var(--third), var(--fourth));
     border-bottom: 1.5px solid var(--gray);
+    z-index: 1000;
 }
 
 .navbar_nav{
@@ -26,34 +27,6 @@
     max-height:50px;
     margin: auto;
     cursor: pointer;
-}
-
-
-
-.nav_item{
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    margin-left: 25px;
-    margin-right: 15px;
-
-}
-
-.nav_item > a{
-    border-bottom: 5px solid var(--fifth);
-    border-radius: 0px;
-    display: block;
-    font-size: 18px;
-    color: var(--light);
-    transition: all 0.5s ease;
-
-}
-
-.nav_item:hover > a{
-    border-bottom: 5px solid var(--sixth);
-    border-radius: 5px;
 }
 
 .search {
@@ -94,15 +67,45 @@
     transition: all 1s ease;
 }
 
-.search_submit:hover {
+.search_submit:hover,.search:hover > .search_submit {
     background: var(--sixth);
     border: 2px solid var(--sixth);
 }
 
+
+
+.nav_item{
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-left: 25px;
+    margin-right: 15px;
+
+}
+
+.nav_item > a{
+    border-bottom: 5px solid var(--fifth);
+    border-radius: 0px;
+    display: block;
+    font-size: 18px;
+    color: var(--light);
+    transition: all 0.5s ease;
+
+}
+
+.nav_item:hover > a{
+    border-bottom: 5px solid var(--sixth);
+    border-radius: 5px;
+}
+
+
+
 .drop_div{
     max-height: 0;
     text-align:center;
-    width: 100px;
+    width: 150px;
     opacity: 0;
     visibility: hidden;
     position: absolute;
@@ -111,8 +114,8 @@
     border-bottom: 3px solid var(--seventh);
     box-shadow: 0 5px 5px 0 var(--eigth);
     background: linear-gradient(90deg, var(--ninth) 0%, var(--tenth) 100%);
-    
     transition: all 1.5s ease,max-height 1s ease;
+    z-index: 1000;
 }
 
 .nav_item > a:hover ~ .drop_div, .nav_item:hover .drop_div{
@@ -135,14 +138,16 @@
    
 }
 
-.drop_div > .dropdown > a{
+.drop_div > .dropdown > button{
+    all: unset;
     font-size: 16px;
     transition: all 0.5s ease;
+    cursor: pointer;
     
     
 }
 
-.drop_div > .dropdown > a:hover{
+.drop_div > .dropdown > button:hover{
     color: var(--eleventh);
     
 }
@@ -183,7 +188,7 @@
     transform: translateX(10px);
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 920px){
 
     .logo{
         top: 10px;
@@ -197,7 +202,7 @@
     }
 
     .nav_links{
-        max-height: 0;
+        
         opacity: 0;
         visibility: hidden;
         position: absolute;
@@ -206,7 +211,6 @@
         right: 0;
         display: flex;
         flex-direction: column;
-        background: red;
         border-radius: 0 0 10px 10px;
         text-align:center;
         border-top: 3px solid var(--seventh);
@@ -240,7 +244,7 @@
         right: 100%;
         box-shadow: 0 5px 0 0 var(--eigth);
         background:var(--ninth) ;
-        height: 104.5%;
+        height: fit-content;
         width: 100%;
         min-width: fit-content;
         text-align: center;
@@ -254,7 +258,7 @@
         vertical-align: middle;
     }
 
-    .drop_div > .dropdown > a{
+    .drop_div > .dropdown > button{
         font-size: 18px;
         transition: all 0.5s ease;
         

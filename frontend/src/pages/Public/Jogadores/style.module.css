@@ -5,17 +5,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik+Iso&display=swap");
 
-  @import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 
 :root{
   --light: white;
   --dark: black;
   --gray: gray;
-  --first: rgb(12, 20, 69);
-  --secound: rgb(71, 30, 84);
-  --third: #0b001d;
-  --fourth:#0e024e;
+  --first: rgb(19, 31, 107);
+  --secound: rgb(100, 43, 117);
+  --third: #2a0467;
+  --fourth:#110458;
   --fifth: #0f05a000;
   --sixth: #65429c;
   --seventh:#9e4784;
@@ -23,13 +23,16 @@
   --ninth: rgba(3,0,61,1);
   --tenth: rgba(50,0,57,1);
   --eleventh: #fdbeff;
-  --twelfth:rgba(3,0,61,1);
-  --thirteenth:rgba(57,0,112,1);
+  --twelfth:rgb(12, 6, 117);
+  --thirteenth:rgb(65, 11, 115);
 }
 
 
 
 .playerspage{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -42,20 +45,22 @@
   background-attachment: fixed;
 }
 
-ul{
+.playerpage ul{
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-a{
+.playerspage a{
   color:var(--light);
   text-decoration: none;
   font-family:  "Ubuntu", sans-serif;
 
 }
 
-footer {
+
+.playerspage footer {
+  margin-top: auto;
   width: 100%;
   color: var(--light);
   align-items: center;
@@ -75,14 +80,14 @@ footer {
   margin: 2rem;
   display: grid;
   gap: 1.2rem;
-  grid-template-columns: repeat(auto-fit,minmax(12rem,14rem));
+  grid-template-columns: repeat(auto-fit,minmax(16rem,18rem));
   justify-content: center;
   transition: all 0.5s ease;
   
   
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 660px){
     .wrapper{
       grid-template-columns: 1fr;
       

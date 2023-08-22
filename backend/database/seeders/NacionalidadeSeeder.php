@@ -13,6 +13,6 @@ class NacionalidadeSeeder extends Seeder
      */
     public function run(): void
     {
-        Nacionalidade::factory()->count(9)->create();
+        //Nacionalidade::factory()->count(5)->create();
     }
 }

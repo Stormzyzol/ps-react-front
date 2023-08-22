@@ -4,9 +4,9 @@ import style from './navbar.module.css'
 
 export default function dropdown(props){
     return(
-        <div className={style.dropdown}>
-            <a href={props.link}>{props.children}</a>
-        </div>
+        <form className={style.dropdown}  onSubmit={props.subNat}>
+            <button value={props.dropValue} onClick={props.natClick}>{props.children}</button>
+        </form>
     )
 
 }

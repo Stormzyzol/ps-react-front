@@ -21,7 +21,7 @@ class JogadorFactory extends Factory
             'imagem'=>$this->faker->imageUrl(640,480),
             'time'=>$this->faker->name,
             'idade'=>$this->faker->numberBetween(10,50),
-            'nacionalidade_id'=>$this->faker->numberBetween(1,10),
+            'nacionalidade_id'=>$this->faker->numberBetween(1,5),
         ];
     }
 }

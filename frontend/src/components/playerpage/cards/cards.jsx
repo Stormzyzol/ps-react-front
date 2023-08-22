@@ -9,7 +9,7 @@ export default function cards(props){
                     <h2 className={style.card_name}>{props.name}</h2>
                     <p className={style.card_team_age}> Time: {props.team}</p>
                     <p className={style.card_team_age}> Idade: {props.age} anos</p>
-                    <p className={style.card_nationality}>Nacionalidade: {props.nationality}</p>
+                    <p className={style.card_nationality}>Pais: {props.nationality}</p>
                 </div>
                 <div className={style.btn_div}>
                     <button className={style.card_btn}>Saiba mais</button>

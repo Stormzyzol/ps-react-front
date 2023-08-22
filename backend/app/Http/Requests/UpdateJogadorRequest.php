@@ -23,7 +23,7 @@ class UpdateJogadorRequest extends FormRequest
     {
         return [
             'nome'=>'sometimes',
-            'imagem'=>'image',
+            'imagem'=>'sometimes',
             'time'=>'sometimes',
             'idade'=>'sometimes',
             'nacionalidade_id'=>'sometimes'

@@ -23,9 +23,11 @@ class JogadorController extends Controller
     public function index(Request $request)
     {
         $jogador = $this->jogador->with('nacionalidades')->when($request->search, function ($query) use ($request){
-            $query->where('nome','like','%'.$request->search.'%')->orWhere('idade',$request->search);
+            $query->where('nome','like','%'.$request->search.'%')->orWhere('nacionalidade_id',$request->search);
         })
-        ->paginate(10);
+        ->paginate(15);
+
+ 
 
         return response()->json($jogador);
     }
@@ -57,11 +59,10 @@ class JogadorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateJogadorRequest $request, int $id)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $jogador = $this->jogador->findOrFail($id);
-        dd($jogador);
         if($request->hasFile('imagem')){
             Storage::disk('public')->delete($jogador->imagem);
             $path = $request->file('imagem')->store('imagem', 'public');

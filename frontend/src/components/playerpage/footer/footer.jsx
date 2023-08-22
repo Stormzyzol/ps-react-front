@@ -23,10 +23,10 @@ export default function footer(props){
                     <h3>Nossa Empresa</h3>
                 </li>
                 <li>
-                    <a href={props.link1} className="sobre-link">{props.empresa1}</a>
+                    <a href={props.link1} className={style.sobre_link}>{props.empresa1}</a>
                 </li>
                 <li>
-                    <a href={props.link2} className="sobre-link">{props.empresa2}</a>
+                    <a href={props.link2} className={style.sobre_link}>{props.empresa2}</a>
                 </li>
     
             </ul>
@@ -36,10 +36,10 @@ export default function footer(props){
                     <h3>Parcerias</h3>
                 </li>
                 <li>
-                    <a href={props.link3} className="sobre-link">{props.parceria1}</a>
+                    <a href={props.link3} className={style.sobre_link}>{props.parceria1}</a>
                 </li>
                 <li>
-                    <a href={props.link4} className="sobre-link">{props.parceria2}</a>
+                    <a href={props.link4} className={style.sobre_link}>{props.parceria2}</a>
                 </li>
                
     
@@ -51,7 +51,7 @@ export default function footer(props){
         </div>
     
         <div className={style.copyright}>
-           @ 2023, Feito com amor por Adapti Soluções Web
+           @ 2023, Feito com ❤️ por Adapti Soluções Web
         </div>
     
        </div>

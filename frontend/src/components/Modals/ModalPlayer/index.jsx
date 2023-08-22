@@ -57,6 +57,9 @@ const ModalPlayer = ({
       formData.append("imagem", image)
 
     }
+    if(idPlayer){
+      formData.append('_method', 'PUT')
+    }
     return formData
   }
 
@@ -70,7 +73,7 @@ const ModalPlayer = ({
     
     if (idPlayer) {
      
-      BaseApi.put(`/jogador/${idPlayer}`, formData).then(res => {
+      BaseApi.post(`/jogador/${idPlayer}`, formData).then(res => {
       
 
         setSaving(false);

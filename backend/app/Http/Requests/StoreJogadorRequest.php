@@ -22,11 +22,11 @@ class StoreJogadorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome'=>'required',
-            'imagem'=>'image|mimes:jpeg,png,jpg,',
-            'time'=>'required',
-            'idade'=>'required',
-            'nacionalidade_id'=>'required'
+            'nome'=>'sometimes',
+            'imagem'=>'image|mimes:jpeg,png,jpg,webp',
+            'time'=>'sometimes',
+            'idade'=>'sometimes',
+            'nacionalidade_id'=>'sometimes'
         ];
     }
 }

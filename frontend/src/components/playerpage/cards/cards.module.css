@@ -3,13 +3,10 @@
     border-radius: 10px;
     height: fit-content;
     min-height: 15vh;
-    min-width:12rem;
+    min-width:16rem;
     display: flex;
     flex-direction: column;
     text-align: center;
-
-    
-    
 }
 
 .card_img{
@@ -32,6 +29,14 @@
     
 }
 
+
+.card_name{
+    font-size: 28px;
+}
+
+.card_team_age,.card_nationality{
+    font-size: 17px;
+}
 
 
 .card_name,.card_team_age,.card_nationality{
@@ -61,10 +66,10 @@
     font-weight: bold;
     color: inherit;
     cursor: pointer;
-    transition: all 0.5s ease;
     padding: 1% 0;
     margin: 1% auto;
     width: 90%;
+    transition: all 0.5s ease;
     
 }
 
@@ -74,7 +79,7 @@
 
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 660px){
 
     .card{
         flex-direction: row;
@@ -94,6 +99,8 @@
 
     .card_body{
         border-radius: 0 10px 10px 0;
+        max-height: none;
+     
     }
 
     .card_team_age,.card_nationality{

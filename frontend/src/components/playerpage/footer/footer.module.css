@@ -57,13 +57,13 @@
     gap: 20px;
 }
 
-.list > li > .sobre-link {
-    color: var(--gray);
+.list > li > .sobre_link {
+    color: var(--light);
     transition: all 1s ease;
 }
 
-.list > li > .sobre-link:hover {
-    color: var(--secound);
+.list > li > .sobre_link:hover {
+    color: var(--sixth);
 }
 
 .copyright {
